@@ -5,6 +5,8 @@ const container = require('../../container');
 const createServer = require('../createServer');
 
 describe('/threads endpoint', () => {
+  let server;
+
   afterAll(async () => {
     await pool.end();
   });
@@ -14,10 +16,12 @@ describe('/threads endpoint', () => {
     await UsersTableTestHelper.cleanTable();
   });
 
+  beforeEach(async () => {
+    server = await createServer(container);
+  });
+
   describe('when POST /threads', () => {
     it('should response 401 if payload not access token', async () => {
-      // Arrange
-      const server = await createServer(container);
       // Action
       const response = await server.inject({
         method: 'POST',
@@ -32,14 +36,10 @@ describe('/threads endpoint', () => {
     });
 
     it('should response 400 if payload not contain needed property', async () => {
-      // Arrange
-
       const payload = {
         username: 'wan',
         password: 'wan',
       };
-
-      const server = await createServer(container);
 
       await server.inject({
         method: 'POST',
@@ -79,8 +79,6 @@ describe('/threads endpoint', () => {
         username: 'wan',
         password: 'wan',
       };
-
-      const server = await createServer(container);
 
       await server.inject({
         method: 'POST',
@@ -125,8 +123,6 @@ describe('/threads endpoint', () => {
         password: 'wan',
       };
 
-      const server = await createServer(container);
-
       await server.inject({
         method: 'POST',
         url: '/users',
@@ -169,8 +165,6 @@ describe('/threads endpoint', () => {
         password: 'wan',
       };
 
-      const server = await createServer(container);
-
       await server.inject({
         method: 'POST',
         url: '/users',
@@ -207,8 +201,6 @@ describe('/threads endpoint', () => {
         username: 'wan',
         password: 'wan',
       };
-
-      const server = await createServer(container);
 
       await server.inject({
         method: 'POST',

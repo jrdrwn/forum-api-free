@@ -32,13 +32,9 @@ describe('GetThreadUseCase', () => {
     const mockThreadRepository = new ThreadRepository();
     const mockCommentRepository = new CommentRepository();
 
-    mockThreadRepository.existsThread = jest.fn().mockImplementation(() => Promise.resolve(true));
-    mockThreadRepository.getThread = jest
-      .fn()
-      .mockImplementation(() => Promise.resolve(fakeThread));
-    mockCommentRepository.getCommentsThread = jest
-      .fn()
-      .mockImplementation(() => Promise.resolve(fakeComments));
+    jest.spyOn(mockThreadRepository, 'existsThread').mockResolvedValue(true);
+    jest.spyOn(mockThreadRepository, 'getThread').mockResolvedValue(fakeThread);
+    jest.spyOn(mockCommentRepository, 'getCommentsThread').mockResolvedValue(fakeComments);
 
     const threadUseCase = new GetThreadUseCase({
       threadRepository: mockThreadRepository,

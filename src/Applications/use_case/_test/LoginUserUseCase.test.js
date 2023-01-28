@@ -22,20 +22,18 @@ describe('GetAuthenticationUseCase', () => {
     const mockPasswordHash = new PasswordHash();
 
     // Mocking
-    mockUserRepository.getPasswordByUsername = jest
-      .fn()
-      .mockImplementation(() => Promise.resolve('encrypted_password'));
-    mockPasswordHash.comparePassword = jest.fn().mockImplementation(() => Promise.resolve());
-    mockAuthenticationTokenManager.createAccessToken = jest
-      .fn()
-      .mockImplementation(() => Promise.resolve(expectedAuthentication.accessToken));
-    mockAuthenticationTokenManager.createRefreshToken = jest
-      .fn()
-      .mockImplementation(() => Promise.resolve(expectedAuthentication.refreshToken));
-    mockUserRepository.getIdByUsername = jest
-      .fn()
-      .mockImplementation(() => Promise.resolve('user-123'));
-    mockAuthenticationRepository.addToken = jest.fn().mockImplementation(() => Promise.resolve());
+    jest.spyOn(mockUserRepository, 'getPasswordByUsername').mockResolvedValue('encrypted_password');
+    jest.spyOn(mockPasswordHash, 'comparePassword').mockResolvedValue();
+    jest
+      .spyOn(mockAuthenticationTokenManager, 'createAccessToken')
+      .mockResolvedValue(expectedAuthentication.accessToken);
+    jest
+      .spyOn(mockAuthenticationTokenManager, 'createRefreshToken')
+      .mockResolvedValue(expectedAuthentication.refreshToken);
+    jest.spyOn(mockUserRepository, 'getIdByUsername').mockResolvedValue('user-123');
+    jest.spyOn(mockAuthenticationRepository, 'addToken').mockResolvedValue();
+    jest.spyOn(mockAuthenticationRepository, 'checkAvailabilityToken').mockResolvedValue();
+    jest.spyOn(mockAuthenticationRepository, 'deleteToken').mockResolvedValue();
 
     // create use case instance
     const loginUserUseCase = new LoginUserUseCase({

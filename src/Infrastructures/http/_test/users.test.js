@@ -4,12 +4,17 @@ const container = require('../../container');
 const createServer = require('../createServer');
 
 describe('/users endpoint', () => {
+  let server;
   afterAll(async () => {
     await pool.end();
   });
 
   afterEach(async () => {
     await UsersTableTestHelper.cleanTable();
+  });
+
+  beforeEach(async () => {
+    server = await createServer(container);
   });
 
   describe('when POST /users', () => {
@@ -21,7 +26,6 @@ describe('/users endpoint', () => {
         fullname: 'Dicoding Indonesia',
       };
       // eslint-disable-next-line no-undef
-      const server = await createServer(container);
 
       // Action
       const response = await server.inject({
@@ -43,7 +47,6 @@ describe('/users endpoint', () => {
         fullname: 'Dicoding Indonesia',
         password: 'secret',
       };
-      const server = await createServer(container);
 
       // Action
       const response = await server.inject({
@@ -68,7 +71,6 @@ describe('/users endpoint', () => {
         password: 'secret',
         fullname: ['Dicoding Indonesia'],
       };
-      const server = await createServer(container);
 
       // Action
       const response = await server.inject({
@@ -93,7 +95,6 @@ describe('/users endpoint', () => {
         password: 'secret',
         fullname: 'Dicoding Indonesia',
       };
-      const server = await createServer(container);
 
       // Action
       const response = await server.inject({
@@ -118,7 +119,6 @@ describe('/users endpoint', () => {
         password: 'secret',
         fullname: 'Dicoding Indonesia',
       };
-      const server = await createServer(container);
 
       // Action
       const response = await server.inject({
@@ -144,7 +144,6 @@ describe('/users endpoint', () => {
         fullname: 'Dicoding Indonesia',
         password: 'super_secret',
       };
-      const server = await createServer(container);
 
       // Action
       const response = await server.inject({

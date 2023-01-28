@@ -32,12 +32,8 @@ describe('LogoutUserUseCase', () => {
       refreshToken: 'refreshToken',
     };
     const mockAuthenticationRepository = new AuthenticationRepository();
-    mockAuthenticationRepository.checkAvailabilityToken = jest
-      .fn()
-      .mockImplementation(() => Promise.resolve());
-    mockAuthenticationRepository.deleteToken = jest
-      .fn()
-      .mockImplementation(() => Promise.resolve());
+    jest.spyOn(mockAuthenticationRepository, 'checkAvailabilityToken').mockResolvedValue();
+    jest.spyOn(mockAuthenticationRepository, 'deleteToken').mockResolvedValue();
 
     const logoutUserUseCase = new LogoutUserUseCase({
       authenticationRepository: mockAuthenticationRepository,
