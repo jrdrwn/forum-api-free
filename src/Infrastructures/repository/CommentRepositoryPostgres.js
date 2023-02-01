@@ -69,11 +69,7 @@ class CommentRepositoryPostgres extends CommentRepository {
 
     const comments = await this._pool.query(query);
 
-    return comments.rows.map((row) => {
-      // eslint-disable-next-line no-unused-expressions, no-param-reassign
-      row.is_deleted && (row.content = '**komentar telah dihapus**');
-      return row;
-    });
+    return comments.rows;
   }
 }
 

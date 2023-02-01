@@ -164,6 +164,7 @@ describe('CommentRepositoryPostgres', () => {
           content: 'content',
           thread: threadPayload.id,
           owner: userPayload.id,
+          createdAt: new Date().toISOString(),
         };
 
         await UsersTableTestHelper.addUser(userPayload);
@@ -174,9 +175,11 @@ describe('CommentRepositoryPostgres', () => {
         const comments = await commentRepositoryPostgres.getCommentsThread(threadPayload.id);
 
         expect(Array.isArray(comments)).toBeTruthy();
+        expect(comments[0].is_deleted).toBeTruthy();
+        expect(comments[0].date).toEqual(commentPayload.createdAt);
         expect(comments[0].id).toEqual(commentPayload.id);
         expect(comments[0].username).toEqual(userPayload.username);
-        expect(comments[0].content).toEqual('**komentar telah dihapus**');
+        expect(comments[0].content).toEqual(commentPayload.content);
       });
     });
   });

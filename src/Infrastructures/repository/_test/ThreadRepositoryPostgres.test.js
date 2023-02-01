@@ -72,5 +72,27 @@ describe('ThreadRepositoryPostgres', () => {
         );
       });
     });
+    describe('getThread function', () => {
+      it('should get a thread with detail thread', async () => {
+        const threadRepository = new ThreadRepositoryPostgres(pool, {});
+        const userPayload = { id: 'user-123', username: 'wan' };
+        const threadPayload = {
+          id: 'thread-1',
+          title: 'title',
+          body: 'body',
+          owner: userPayload.id,
+          createdAt: new Date().toISOString(),
+        };
+        await UsersTableTestHelper.addUser(userPayload);
+        await ThreadsTableTestHelper.addThread(threadPayload);
+
+        const thread = await threadRepository.getThread(threadPayload.id);
+        expect(thread.id).toEqual(threadPayload.id);
+        expect(thread.title).toEqual(threadPayload.title);
+        expect(thread.date).toEqual(threadPayload.createdAt);
+        expect(thread.body).toEqual(threadPayload.body);
+        expect(thread.username).toEqual(userPayload.username);
+      });
+    });
   });
 });
