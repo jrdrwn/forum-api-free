@@ -1,7 +1,3 @@
-/* eslint-disable camelcase */
-
-exports.shorthands = undefined;
-
 exports.up = (pgm) => {
   pgm.createTable('comments', {
     id: {
@@ -30,6 +26,7 @@ exports.up = (pgm) => {
     },
     is_deleted: {
       type: 'INTEGER',
+      default: 0,
     },
   });
 
