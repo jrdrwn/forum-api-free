@@ -52,6 +52,16 @@ const createServer = async (container) => {
   ]);
 
   server.auth.default('jwt');
+  server.route({
+    method: 'GET',
+    path: '/',
+    handler: () => ({
+      value: 'Hello world!',
+    }),
+    options: {
+      auth: false,
+    },
+  });
 
   server.ext('onPreResponse', (request, h) => {
     // mendapatkan konteks response dari request
