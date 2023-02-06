@@ -1,7 +1,0 @@
-{
-  "user": "jordi",
-  "password": "jordiirawan",
-  "host": "localhost",
-  "port": 5432,
-  "database": "forumapi_tests"
-}
